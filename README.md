@@ -10,8 +10,7 @@ Mods do Claude Code com as faixas acima do prompt:
 
 ## Instalar
 
-Repositório privado: a máquina precisa de uma credencial git do GitHub com acesso a ele
-(`gh auth login` e depois `gh auth setup-git`).
+Repositório público: instala sem credencial do GitHub, inclusive no setup script das sessões na nuvem.
 
 Num terminal do Claude Code:
 
