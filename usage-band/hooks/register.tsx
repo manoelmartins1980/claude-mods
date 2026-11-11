@@ -22,11 +22,11 @@ const toLimits = (rows: SessionRateLimit[]): Limits => ({
 const pad = (n: number) => String(n).padStart(2, '0')
 const DAYS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb']
 
-// horário sempre de Lisboa: a máquina da nuvem roda em UTC
+// fuso fixo do horário de reset, igual em máquina local e na nuvem (UTC); troque pelo seu fuso IANA
 const TZ = 'Europe/Lisbon'
 const WD: Record<string, number> = { Sun: 0, Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6 }
 
-const lisboa = (d: Date) => {
+const noFuso = (d: Date) => {
   try {
     const p: Record<string, string> = {}
     for (const x of new Intl.DateTimeFormat('en-US', {
@@ -38,7 +38,7 @@ const lisboa = (d: Date) => {
       return { h: Number(p.hour), m: Number(p.minute), wd: WD[p.weekday] }
     }
   } catch {
-    // sem Intl: cai no horário local
+    // sem Intl: usa o fuso da máquina
   }
 
   return { h: d.getHours(), m: d.getMinutes(), wd: d.getDay() }
@@ -46,7 +46,7 @@ const lisboa = (d: Date) => {
 
 const clock = (iso?: string, withDay = false) => {
   if (!iso) return '?'
-  const { h, m, wd } = lisboa(new Date(iso))
+  const { h, m, wd } = noFuso(new Date(iso))
   const hm = `${pad(h)}:${pad(m)}`
 
   return withDay ? `${DAYS[wd]} ${hm}` : hm

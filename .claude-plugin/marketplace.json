@@ -2,7 +2,7 @@
   "name": "claude-mods",
   "owner": { "name": "manoel" },
   "plugins": [
-    { "name": "usage-band", "source": "./usage-band", "description": "Faixa acima do prompt com o consumo da janela de 5h e da semana, com horário de reset (Lisboa)." },
+    { "name": "usage-band", "source": "./usage-band", "description": "Faixa acima do prompt com o consumo da janela de 5h e da semana, com o horário do próximo reset." },
     { "name": "tokens-turno", "source": "./tokens-turno", "description": "Faixa acima do prompt com os tokens da última resposta e o acumulado da sessão." },
     { "name": "contexto-barra", "source": "./contexto-barra", "description": "Faixa acima do prompt com a barra da janela de contexto." }
   ]

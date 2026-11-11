@@ -33,7 +33,7 @@ describe('usage-band', () => {
       expect(await ui.find({ type: 'Text', text: ' 32%' })).toBeDefined()
       expect(await ui.find({ type: 'Text', text: ' 58%' })).toBeDefined()
       expect(await ui.find({ type: 'Text', text: 'OUTRO' })).toBeDefined()
-      // reset no horário de Lisboa, qualquer que seja o fuso da máquina
+      // reset no fuso de TZ (Europe/Lisbon), qualquer que seja o fuso da máquina
       expect(await ui.find({ type: 'Text', text: ' · reset 22:40' })).toBeDefined()
       expect(await ui.find({ type: 'Text', text: ' · reset sex 13:00' })).toBeDefined()
       await ui.unmount()
