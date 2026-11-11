@@ -1,0 +1,1 @@
+{ "name": "tokens-turno", "version": "0.1.0", "author": { "name": "manoel" }, "description": "Faixa acima do prompt com os tokens de entrada, cache e saída da última resposta e o acumulado da sessão.", "types": "./types/index.d.ts" }
