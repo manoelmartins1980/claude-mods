@@ -32,6 +32,9 @@ claude plugin install contexto-barra@claude-mods --scope user
 No app desktop, onde `/plugin` não roda: + ao lado da caixa do prompt, Plugins, Add marketplace com
 `manoelmartins1980/claude-mods`, depois Add plugin.
 
+Plugins instalados com uma sessão já aberta só carregam na próxima sessão ou depois de
+`/reload-plugins`, digitado na caixa do prompt (também no app desktop).
+
 ## Sessões na nuvem
 
 Os plugins precisam ser instalados no setup script de cada ambiente de nuvem. Uma versão que não
@@ -50,6 +53,22 @@ impede a sessão de abrir se algo falhar e grava um log para diagnóstico:
   fi
 } > /tmp/claude-mods-setup.log 2>&1 || true
 ```
+
+### As faixas não aparecem na sessão de nuvem
+
+O processo do Claude Code de uma sessão de nuvem pode já estar rodando (pré-aquecido) quando o setup
+script termina. Nesse caso, os mods ficam instalados e `claude plugin list` os mostra como `enabled`,
+mas eles não carregam, e nenhuma faixa aparece. **Digite `/reload-plugins` na caixa do prompt** no
+início da sessão: a saída mostra `Reloaded:` com a contagem de plugins, e as faixas aparecem.
+
+- O comando só funciona digitado por você: o Claude não consegue rodá-lo.
+- Para confirmar que um mod carregou, veja se existe a pasta `.claude-plugin/types/` dentro dele
+  (`~/.claude/plugins/cache/claude-mods/<mod>/<versão>/`); o Claude Code a cria ao carregar o mod.
+- Declarar o marketplace e os plugins no `.claude/settings.json` do repositório
+  (`extraKnownMarketplaces` + `enabledPlugins`) não resolve: sessões de nuvem não instalam plugins
+  declarados assim.
+- Se os mods já foram carregados de outro jeito na sessão (por exemplo, de uma pasta), não rode
+  `/reload-plugins`: cada faixa apareceria duas vezes.
 
 ## Fuso horário
 
