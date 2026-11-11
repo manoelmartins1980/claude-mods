@@ -37,8 +37,8 @@ Plugins instalados com uma sessão já aberta só carregam na próxima sessão o
 
 ## Sessões na nuvem
 
-Os plugins precisam ser instalados no setup script de cada ambiente de nuvem. Uma versão que não
-impede a sessão de abrir se algo falhar e grava um log para diagnóstico:
+Hoje as sessões de nuvem não desenham mods (veja abaixo). Para instalá-los mesmo assim, use o setup
+script de cada ambiente de nuvem. Uma versão que não impede a sessão de abrir se algo falhar e grava um log para diagnóstico:
 
 ```bash
 {
@@ -54,21 +54,16 @@ impede a sessão de abrir se algo falhar e grava um log para diagnóstico:
 } > /tmp/claude-mods-setup.log 2>&1 || true
 ```
 
-### As faixas não aparecem na sessão de nuvem
+### Sessões de nuvem não desenham mods
 
-O processo do Claude Code de uma sessão de nuvem pode já estar rodando (pré-aquecido) quando o setup
-script termina. Nesse caso, os mods ficam instalados e `claude plugin list` os mostra como `enabled`,
-mas eles não carregam, e nenhuma faixa aparece. **Digite `/reload-plugins` na caixa do prompt** no
-início da sessão: a saída mostra `Reloaded:` com a contagem de plugins, e as faixas aparecem.
+Numa sessão de nuvem (claude.ai/code), os mods instalam e carregam, mas **nenhuma faixa aparece**,
+nem no app desktop: a nuvem roda os hooks e não desenha nada. A tabela "Where mods run" da
+documentação lista a sessão de nuvem com drawing "No"
+(https://code.claude.com/docs/en/plugins/mods). Com o app desktop acompanhando uma sessão de nuvem,
+`$.session.surfaces()` fica vazio e nenhum `ui.render` chega. As faixas aparecem nas sessões locais:
+terminal e aba Code do app desktop (v2.1.286 ou superior).
 
-- O comando só funciona digitado por você: o Claude não consegue rodá-lo.
-- Para confirmar que um mod carregou, veja se existe a pasta `.claude-plugin/types/` dentro dele
-  (`~/.claude/plugins/cache/claude-mods/<mod>/<versão>/`); o Claude Code a cria ao carregar o mod.
-- Declarar o marketplace e os plugins no `.claude/settings.json` do repositório
-  (`extraKnownMarketplaces` + `enabledPlugins`) não resolve: sessões de nuvem não instalam plugins
-  declarados assim.
-- Se os mods já foram carregados de outro jeito na sessão (por exemplo, de uma pasta), não rode
-  `/reload-plugins`: cada faixa apareceria duas vezes.
+O script acima vale só para quando a nuvem passar a desenhar mods.
 
 ## Fuso horário
 
